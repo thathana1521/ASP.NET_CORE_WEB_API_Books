@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using BookApiProject.Services;
 using BookApiProject.Services.Interfaces;
 using BookApiProject.Services.Repositories;
+using BookApiProject.Services.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
+using SwaggerOptions = BookApiProject.Services.Swagger.SwaggerOptions;
 
 namespace BookApiProject
 {
@@ -40,6 +43,9 @@ namespace BookApiProject
             services.AddScoped<IReviewRepository, ReviewRepository>();
             services.AddScoped<IBookRepository,BookRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
+
+            //add swagger
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "Book API", Version = "v1"}); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +56,15 @@ namespace BookApiProject
                 app.UseDeveloperExceptionPage();
             }
 
+            var swaggerOptions = new SwaggerOptions();
+            Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
+
+            app.UseSwagger(option => { option.RouteTemplate = swaggerOptions.JsonRoute; });
+            app.UseSwaggerUI(option =>
+            {
+                option.SwaggerEndpoint(swaggerOptions.UiEndpoint, swaggerOptions.Description);
+            });
+
             /*app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");
@@ -58,6 +73,10 @@ namespace BookApiProject
             //Just for the first time
             //context.SeedDataContext();
 
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            
             app.UseMvc();
         }
     }
