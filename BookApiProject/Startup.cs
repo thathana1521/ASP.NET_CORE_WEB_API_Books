@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookApiProject.Installers;
 using BookApiProject.Services;
 using BookApiProject.Services.Interfaces;
 using BookApiProject.Services.Repositories;
@@ -29,23 +30,7 @@ namespace BookApiProject
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                .AddJsonOptions(o=>o.SerializerSettings.ReferenceLoopHandling = 
-                    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            
-
-            var connectionString = Configuration["connectionStrings:bookDbConnectionString"];
-            services.AddDbContext<BookDbContext>(c =>c.UseSqlServer(connectionString));
-
-            services.AddScoped<ICountryRepository, CountryRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<IReviewerRepository, ReviewerRepository>();
-            services.AddScoped<IReviewRepository, ReviewRepository>();
-            services.AddScoped<IBookRepository,BookRepository>();
-            services.AddScoped<IAuthorRepository, AuthorRepository>();
-
-            //add swagger
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "Book API", Version = "v1"}); });
+            services.InstallServicesInAssembly(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,14 +12,14 @@ namespace BookApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookController : Controller
+    public class BooksController : Controller
     {
         private readonly IBookRepository _iBookRepository;
         private readonly IAuthorRepository _iAuthorRepository;
         private readonly ICategoryRepository _iCategoryRepository;
         private readonly IReviewRepository _iReviewRepository;
 
-        public BookController(IBookRepository iBookRepository, IAuthorRepository iAuthorRepository, ICategoryRepository iCategoryRepository, IReviewRepository iReviewRepository)
+        public BooksController(IBookRepository iBookRepository, IAuthorRepository iAuthorRepository, ICategoryRepository iCategoryRepository, IReviewRepository iReviewRepository)
         {
             _iBookRepository = iBookRepository;
             _iAuthorRepository = iAuthorRepository;
@@ -27,7 +27,7 @@ namespace BookApiProject.Controllers
             _iReviewRepository = iReviewRepository;
         }
         
-        //api/book
+        //api/books
         [HttpGet]
         [ProducesResponseType(400)]
         [ProducesResponseType(200, Type = typeof(ICollection<BookDTO>))]
@@ -54,7 +54,7 @@ namespace BookApiProject.Controllers
             return Ok(booksDto);
         }
 
-        //api/book/{bookId}
+        //api/books/{bookId}
         [HttpGet("{bookId}", Name = "GetBook")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -79,7 +79,7 @@ namespace BookApiProject.Controllers
             return Ok(bookDto);
         }
 
-        //api/book/isbn/{bookIsbn}
+        //api/books/isbn/{bookIsbn}
         [HttpGet("isbn/{bookIsbn}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -104,7 +104,7 @@ namespace BookApiProject.Controllers
             return Ok(bookDto);
         }
 
-        //api/book/{bookId}/rating
+        //api/books/{bookId}/rating
         [HttpGet("{bookId}/rating")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -145,7 +145,7 @@ namespace BookApiProject.Controllers
             return CreatedAtRoute("GetBook", new {bookId = book.Id}, book);
         }
 
-        //api/book/bookId?authId=1&authId=2&catId=1&catId=2
+        //api/books/bookId?authId=1&authId=2&catId=1&catId=2
         [HttpPut("{bookId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -173,7 +173,7 @@ namespace BookApiProject.Controllers
             return NoContent();
         }
 
-        //api/book/{bookId}
+        //api/books/{bookId}
         [HttpDelete("{bookId}")]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]

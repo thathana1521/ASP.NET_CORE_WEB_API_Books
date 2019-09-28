@@ -12,19 +12,20 @@ namespace BookApiProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorController : Controller
+    public class AuthorsController : Controller
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IBookRepository _iBookRepository;
         private readonly ICountryRepository _iCountryRepository;
 
-        public AuthorController(IAuthorRepository authorRepository, IBookRepository iBookRepository, ICountryRepository iCountryRepository)
+        public AuthorsController(IAuthorRepository authorRepository, IBookRepository iBookRepository, ICountryRepository iCountryRepository)
         {
             _authorRepository = authorRepository;
             _iBookRepository = iBookRepository;
             _iCountryRepository = iCountryRepository;
         }
 
+        //api/
         [HttpGet]
         [ProducesResponseType(400)]
         [ProducesResponseType(200,Type = typeof(IEnumerable<AuthorDTO>))]
