@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Collections.Generic;
+using BookApiProject.Contracts.V1;
 using BookApiProject.DTOs;
 using BookApiProject.Models;
-using BookApiProject.Services;
 using BookApiProject.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookApiProject.Controllers
+namespace BookApiProject.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [Route(ApiRoutes.ReviewsRoot)]
     [ApiController]
-    public class ReviewController : Controller
+    public class ReviewsController : Controller
     {
         private readonly IReviewRepository _iReviewRepository;
         private readonly IBookRepository _iBookRepository;
         private readonly IReviewerRepository _iReviewerRepository;
 
-        public ReviewController(IReviewRepository iReviewRepository, IBookRepository iBookRepository,IReviewerRepository iReviewerRepository)
+        public ReviewsController(IReviewRepository iReviewRepository, IBookRepository iBookRepository,IReviewerRepository iReviewerRepository)
         {
             _iReviewRepository = iReviewRepository;
             _iBookRepository = iBookRepository;
@@ -49,7 +47,7 @@ namespace BookApiProject.Controllers
             return Ok(reviewsDto);
         }
 
-        //api/review/{reviewId}
+        //api/reviews/{reviewId}
         [HttpGet("{reviewId}",Name = "GetReview")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -74,7 +72,7 @@ namespace BookApiProject.Controllers
             return Ok(reviewDto);
         }
 
-        //api/review/{reviewId}/book
+        //api/reviews/{reviewId}/book
         [HttpGet("{reviewId}/book")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -99,7 +97,7 @@ namespace BookApiProject.Controllers
             return Ok(bookDto);
         }
 
-        //api/review/book/{bookId}
+        //api/reviews/book/{bookId}
         [HttpGet("book/{bookId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -131,7 +129,7 @@ namespace BookApiProject.Controllers
 
 
 
-        //api/review
+        //api/reviews
         [HttpPost]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
@@ -177,7 +175,7 @@ namespace BookApiProject.Controllers
             return CreatedAtRoute("GetReview", new {reviewId = reviewToCreate.Id}, reviewToCreate);
         }
 
-        //api/review/{reviewId}
+        //api/reviews/{reviewId}
         [HttpPut("{reviewId}")]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
@@ -229,7 +227,7 @@ namespace BookApiProject.Controllers
             return NoContent();
         }
 
-        //api/review/{reviewId}
+        //api/reviews/{reviewId}
         [HttpDelete("{reviewId}")]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]

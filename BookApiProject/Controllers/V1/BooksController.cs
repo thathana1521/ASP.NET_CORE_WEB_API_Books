@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using BookApiProject.Contracts.V1;
 using BookApiProject.DTOs;
 using BookApiProject.Models;
-using BookApiProject.Services;
 using BookApiProject.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookApiProject.Controllers
+namespace BookApiProject.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [Route(ApiRoutes.BooksRoot)]
     [ApiController]
     public class BooksController : Controller
     {

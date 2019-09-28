@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using BookApiProject.Contracts.V1;
 using BookApiProject.DTOs;
 using BookApiProject.Models;
-using BookApiProject.Services;
 using BookApiProject.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookApiProject.Controllers
+namespace BookApiProject.Controllers.V1
 {
     //specify route
-    [Route("api/[controller]")]
+    [Route(ApiRoutes.CountriesRoot)]
     [ApiController]
-    public class CountryController : Controller
+    public class CountriesController : Controller
     {
         private readonly ICountryRepository _countryRepository;
         private readonly IAuthorRepository _iAuthorRepository;
 
-        public CountryController(ICountryRepository countryRepository,IAuthorRepository iAuthorRepository)
+        public CountriesController(ICountryRepository countryRepository,IAuthorRepository iAuthorRepository)
         {
             _countryRepository = countryRepository;
             _iAuthorRepository = iAuthorRepository;
@@ -52,7 +50,7 @@ namespace BookApiProject.Controllers
         }
 
         //api/countries/countryId
-        [HttpGet("{countryId}",Name = "GetCountry")]
+        [HttpGet("{countryId}", Name = "GetCountry")]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesResponseType(200, Type = typeof(CountryDTO))]
@@ -107,7 +105,7 @@ namespace BookApiProject.Controllers
             return Ok(countryDTO);
         }
 
-        //api/country/{countryId}/authors
+        //api/countries/{countryId}/authors
         [HttpGet("{countryId}/authors")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<AuthorDTO>))]
         [ProducesResponseType(400)]
@@ -137,7 +135,7 @@ namespace BookApiProject.Controllers
             return Ok(authorsDto);
         }
 
-        //api/country
+        //api/countries
         [HttpPost]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]

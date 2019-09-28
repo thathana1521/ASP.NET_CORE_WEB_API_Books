@@ -1,29 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using BookApiProject.Contracts.V1;
 using BookApiProject.DTOs;
 using BookApiProject.Models;
-using BookApiProject.Services;
 using BookApiProject.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookApiProject.Controllers
+namespace BookApiProject.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [Route(ApiRoutes.CategoriesRoot)]
     [ApiController]
-    public class CategoryController : Controller
+    public class CategoriesController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IBookRepository _iBookRepository;
 
-        public CategoryController(ICategoryRepository categoryRepository, IBookRepository iBookRepository)
+        public CategoriesController(ICategoryRepository categoryRepository, IBookRepository iBookRepository)
         {
             _categoryRepository = categoryRepository;
             _iBookRepository = iBookRepository;
         }
 
-        //api/category
+        //api/categories
         [HttpGet]
         [ProducesResponseType(400)]
         [ProducesResponseType(200, Type = typeof(ICollection<CategoryDTO>))]
@@ -49,7 +47,7 @@ namespace BookApiProject.Controllers
             return Ok(categoriesDTO);
         }
 
-        //api/category/{categoryId}
+        //api/categories/{categoryId}
         [HttpGet("{categoryId}",Name = "GetCategory")]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
@@ -75,7 +73,7 @@ namespace BookApiProject.Controllers
             return Ok(categoryDTO);
         }
 
-        //api/category/books/{bookId}
+        //api/categories/books/{bookId}
         [HttpGet("books/{bookId}")]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
@@ -100,7 +98,7 @@ namespace BookApiProject.Controllers
             return Ok(categoriesOfBookDTO);
         }
 
-        //api/category/{categoryId}/books
+        //api/categories/{categoryId}/books
         [HttpGet("{categoryId}/books")]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
@@ -131,7 +129,7 @@ namespace BookApiProject.Controllers
             return Ok(booksDto);
         }
 
-        //api/category
+        //api/categories
         [HttpPost]
         [ProducesResponseType(400)]
         [ProducesResponseType(422)]
@@ -163,7 +161,7 @@ namespace BookApiProject.Controllers
             return CreatedAtRoute("GetCategory", new {categoryId = categoryToCreate.Id}, categoryToCreate);
         }
 
-        //api/category/{categoryId}
+        //api/categories/{categoryId}
         [HttpPut("{categoryId}")]
         [ProducesResponseType(400)]//Bad request
         [ProducesResponseType(404)]//Not found
@@ -199,7 +197,7 @@ namespace BookApiProject.Controllers
             return NoContent();
         }
 
-        //api/category/{categoryId}
+        //api/categories/{categoryId}
         [HttpDelete("{categoryId}")]
         [ProducesResponseType(204)] //no content
         [ProducesResponseType(400)] //Bad request

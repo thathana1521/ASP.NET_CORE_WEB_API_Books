@@ -1,29 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using BookApiProject.Contracts.V1;
 using BookApiProject.DTOs;
 using BookApiProject.Models;
-using BookApiProject.Services;
 using BookApiProject.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookApiProject.Controllers
+namespace BookApiProject.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [Route(ApiRoutes.ReviewersRoot)]
     [ApiController]
-    public class ReviewerController : Controller
+    public class ReviewersController : Controller
     {
         private readonly IReviewerRepository _iReviewerRepository;
         private readonly IReviewRepository _iReviewRepository;
 
-        public ReviewerController(IReviewerRepository iReviewerRepository, IReviewRepository iReviewRepository)
+        public ReviewersController(IReviewerRepository iReviewerRepository, IReviewRepository iReviewRepository)
         {
             _iReviewerRepository = iReviewerRepository;
             _iReviewRepository = iReviewRepository;
         }
 
-        //api/reviewer
+        //api/reviewers
         [HttpGet]
         [ProducesResponseType(400)]
         [ProducesResponseType(200,Type = typeof(IEnumerable<ReviewerDTO>))]
@@ -50,7 +48,7 @@ namespace BookApiProject.Controllers
             return Ok(reviewersDto);
         }
 
-        //api/reviewer/{reviewerId}
+        //api/reviewers/{reviewerId}
         [HttpGet("{reviewerId}",Name = "GetReviewer")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -75,7 +73,7 @@ namespace BookApiProject.Controllers
             return Ok(reviewerDto);
         }
 
-        //api/reviewer/{reviewerId}/reviews
+        //api/reviewers/{reviewerId}/reviews
         [HttpGet("{reviewerId}/reviews")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -106,7 +104,7 @@ namespace BookApiProject.Controllers
             return Ok(reviewsDto);
         }
 
-        //api/reviewer/review/{reviewId}
+        //api/reviewers/review/{reviewId}
         [HttpGet("review/{reviewId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -131,7 +129,7 @@ namespace BookApiProject.Controllers
             return Ok(reviewerDto);
         }
 
-        //api/reviewer
+        //api/reviewers
         [HttpPost]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
@@ -150,7 +148,7 @@ namespace BookApiProject.Controllers
             return CreatedAtRoute("GetReviewer", new {reviewerId = reviewer.Id}, reviewer);
         }
 
-        //api/reviewer/{reviewerId}
+        //api/reviewers/{reviewerId}
         [HttpPut("{reviewerId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -176,7 +174,7 @@ namespace BookApiProject.Controllers
             return NoContent();
         }
 
-        //api/reviewer/{reviewerId}
+        //api/reviewers/{reviewerId}
         [HttpDelete("{reviewerId}")]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
